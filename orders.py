@@ -34,8 +34,8 @@ async def update_order(request: Request, order_id: int):
 
 @router.put("/{order_id}", response_model=OrderIn)
 async def update_order(order_id: int, new_order: OrderIn):
-    query = orders.update().where(orders.c.id == order_id)
-             .values(date=datetime.now().strftime("%d/%m/%y, %H:%M:%S"), status=new_order.status)
+    query = orders.update().where(orders.c.id == order_id).values(date=datetime.now().strftime("%d/%m/%y, %H:%M:%S"),
+                                                                  status=new_order.status)
     await database.execute(query)
     return {**new_order.model_dump(), "id": order_id}
 
